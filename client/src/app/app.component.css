@@ -1,0 +1,7 @@
+.dropdown-toggle, .dropdown-item 
+{ 
+    cursor: pointer;
+} 
+.bg-dark { 
+background-color: #2483a0 !important;; 
+}
