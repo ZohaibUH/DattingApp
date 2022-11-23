@@ -13,7 +13,8 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
-
+import { Toast, ToastrModule } from 'ngx-toastr';
+import { SharedModule } from './_modules/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,8 +31,10 @@ import { MessagesComponent } from './messages/messages.component';
     AppRoutingModule, 
     HttpClientModule,  
     BrowserAnimationsModule, 
-    FormsModule, 
-    BsDropdownModule.forRoot()
+    FormsModule,  
+    SharedModule
+  
+  
   ],
   providers: [],
   bootstrap: [AppComponent]

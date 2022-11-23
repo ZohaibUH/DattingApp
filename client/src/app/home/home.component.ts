@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
+
 import { Component, OnInit } from '@angular/core';
 
 @Component({
