@@ -1,0 +1,15 @@
+<h4>Internal Server Error -Refreshing the page will make error disappear</h4> 
+<ng-container > 
+    <h5 class="test-danger">Error: {{error.message}}</h5> 
+    <p class="font-weight-bold">Note: if you are seeing this angular is probbaly not to blame</p> 
+    <p>what to do next</p> 
+    <ol > 
+        <li>Open chrome dev tools! then check the failing request in the nework tab</li> 
+        <li>Examine the request URL - what API endd point are you requesting?</li> 
+        <li>Reproduce the problem in Postman- if we get some error Angular is 100% not the problem</li> 
+    </ol> 
+    <p style="font-weight: bold">Follwing is the trace -first few lines will tell you which line of code caused the issue in the API </p>
+    <code class="mt-5" style="background-color: whitesmoke;">  
+        {{error.details}}
+    </code>
+</ng-container>

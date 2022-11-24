@@ -20,6 +20,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using API.Extensions;
+using API.Middleware;
 
 namespace API
 {
@@ -61,7 +62,7 @@ namespace API
             }
 
             app.UseHttpsRedirection();
-
+           app.UseMiddleware<ExceptionMiddleware>();
             app.UseRouting();
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200")); 
             app.UseAuthentication();
