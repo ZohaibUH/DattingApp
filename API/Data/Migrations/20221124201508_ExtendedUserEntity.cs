@@ -38,13 +38,13 @@ namespace API.Data.Migrations
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AddColumn<string>(
-                name: "Lookingfor",
+                name: "LookingFor",
                 table: "Users",
                 type: "TEXT",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "city",
+                name: "City",
                 table: "Users",
                 type: "TEXT",
                 nullable: true);
@@ -57,19 +57,19 @@ namespace API.Data.Migrations
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AddColumn<string>(
-                name: "interests",
+                name: "Interests",
                 table: "Users",
                 type: "TEXT",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "intorduction",
+                name: "Introduction",
                 table: "Users",
                 type: "TEXT",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "knwonAs",
+                name: "KnownAs",
                 table: "Users",
                 type: "TEXT",
                 nullable: true);
@@ -125,11 +125,11 @@ namespace API.Data.Migrations
                 table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "Lookingfor",
+                name: "LookingFor",
                 table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "city",
+                name: "City",
                 table: "Users");
 
             migrationBuilder.DropColumn(
@@ -137,15 +137,15 @@ namespace API.Data.Migrations
                 table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "interests",
+                name: "Interests",
                 table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "intorduction",
+                name: "Introduction",
                 table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "knwonAs",
+                name: "KnownAs",
                 table: "Users");
         }
     }

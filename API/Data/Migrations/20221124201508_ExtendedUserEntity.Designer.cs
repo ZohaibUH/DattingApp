@@ -38,7 +38,7 @@ namespace API.Data.Migrations
                     b.Property<DateTime>("LastActive")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Lookingfor")
+                    b.Property<string>("LookingFor")
                         .HasColumnType("TEXT");
 
                     b.Property<byte[]>("PasswordHash")
@@ -50,19 +50,19 @@ namespace API.Data.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("city")
+                    b.Property<string>("City")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("created")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("interests")
+                    b.Property<string>("Interests")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("intorduction")
+                    b.Property<string>("Introduction")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("knwonAs")
+                    b.Property<string>("KnownAs")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
