@@ -1,20 +1,70 @@
-<div class="container mt-5"> 
-    <div *ngIf="!registerMode" style="text-align: center;">  
-        <h1>ITR Labortaries</h1> 
-        <p class="lead">  
-            Open Close file Web App 
-             </p>
-            <div class="text-center"> 
-             <button (click)="registerToggle()" class="btn btn-primary btn-lg mr-2">Register</button> 
-             <button class="btn btn-info btn-lg ">Learn more</button>
-            </div>  
-    </div>
-    <div *ngIf="registerMode" class="container" > 
-        <div class="row justify-content-center"> 
-            <div class="col-4"> 
-                <app-register  (cancelRegister)="cancelRegisterMode($event)"></app-register>
-            </div>
-        </div>
 
-    </div>   
+
+<div class="container mt-5"> 
+  <div *ngIf="!registerMode" style="text-align: center;">  
+      <h1>ITR Labortaries</h1> 
+      <p class="lead">  
+          Open Close file Web App 
+           </p>
+          <div class="text-center"> 
+           <button (click)="registerToggle()" class="btn btn-primary btn-lg mr-2">Register</button> 
+           <button class="btn btn-info btn-lg ">Learn more</button>
+          </div>  
+  </div>
+  <div *ngIf="registerMode" class="container" > 
+      <div class="row justify-content-center"> 
+          <div class="col-4"> 
+              <app-register  (cancelRegister)="cancelRegisterMode($event)"></app-register>
+          </div>
+      </div>
+
+  </div>   
 </div>
+  <div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      <div class="col-lg-4">
+        
+        <img src="assets/features.png" width="200" height="140" alt="features">
+        <h2 class="fw-normal">Heading</h2>
+        <p>Master Schedule provides an interactive interface to maintain the studies.</p>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <img src="assets/get_started.jpg" width="200" height="140" alt="features">
+
+        <h2 class="fw-normal">Heading</h2>
+        <p>All departments participating in the archiving process will be able to access the forms required.</p>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <img src="assets/integration.jpg" width="200" height="140" alt="features">
+
+        <h2 class="fw-normal">Heading</h2>
+        <p>Other ITR Applications can provide useful information.</p>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+
+    <!-- START THE FEATURETTES -->
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading fw-normal lh-1">ITR Labortaries- <span class="text-muted">Covid 19 Response</span></h2>
+        <p class="lead">ITR's Crises Managaement Team has been meeting frequently to identify what preventive measures needed to be taken to optimize the protection 
+          of the staff and safeguard the work that we are performing of our clients. Of paramount importance is to exclude the virus from the facility by providing safety measures in line  with global guidance available to us.</p>
+      </div>
+      <div class="col-md-5">
+        <img src="assets/itr-build.png" width="500" height="400" alt="">
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- /END THE FEATURETTES -->
+
+  </div><!-- /.container -->
