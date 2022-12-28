@@ -22,7 +22,7 @@ footer {
 }
   
   .nav-tabs > li.open, .member-tabset > .nav-tabs > li:hover {
-    border-bottom: 4px solid #fbcdcf;
+    
   }
    
   .member-tabset > .nav-tabs > li.open > a, .member-tabset > .nav-tabs > li:hover > a {
@@ -32,7 +32,7 @@ footer {
   }
    
   .member-tabset > .nav-tabs > li.open > a > i, .member-tabset > .nav-tabs > li:hover > a > i {
-    color: #a6a6a6;
+    
   }
    
   .member-tabset > .nav-tabs > li.open .dropdown-menu, .member-tabset > .nav-tabs > li:hover .dropdown-menu {
@@ -40,7 +40,7 @@ footer {
   }
    
   .member-tabset > .nav-tabs > li.active {
-    border-bottom: 4px solid #E95420;
+    
     position: relative;
   }
    

@@ -13,6 +13,8 @@ import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { FileListComponent } from './file-list/file-list.component';
 import { ResolveGuard } from './_guards/resolve.guard';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { AdminGuard } from './_guard/admin.guard';
 const routes: Routes = [ 
   {path: '', component :HomeComponent},  
   {path: '', 
@@ -24,7 +26,8 @@ const routes: Routes = [
         {path: 'member/edit', component :MemberEditComponent , canDeactivate:[PreventUnsavedChangesGuard]}, 
         {path: 'lists', component :ListsComponent}, 
         {path: 'messages', component :MessagesComponent}, 
-        {path: 'files', component:FileListComponent, resolve:{ data:ResolveGuard}}, 
+        {path: 'files', component:FileListComponent, resolve:{ data:ResolveGuard}},  
+        {path: 'admin', component:AdminPanelComponent, canActivate:[AdminGuard]}
        ]
   },
   {path: 'errors', component:TestErrorComponent},  

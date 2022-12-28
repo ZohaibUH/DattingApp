@@ -1,17 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using API.Extensions;
+
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Entities
 {
-    public class AppUser
+    public class AppUser :IdentityUser<int>
+   // :IdentityUser<int>
     {
-        public int Id { get; set; }  
-        public string UserName { get; set; } 
-        public byte[] PasswordHash {get; set;} 
-        public byte[] PasswordSalt {get; set;} 
+       
         public DateOnly DateOfBirth {get;  set;}  
         public string KnownAs {get; set;}  
         public DateTime created {get; set;}=DateTime.UtcNow;  
@@ -28,8 +23,10 @@ namespace API.Entities
         //{ 
           //  return DateOfBirth.CalculateAge();
        // }
-
-
+      // public ICollection<AppUserRole> UserRoles { get; set; }
+      public List<UserLike> LikedByUsers { get; set; }  //many to many relationship 
+      public List<UserLike> LikedUsers { get; set; } 
+      public ICollection<AppUserRole> UserRoles { get; set; }
 
     }
 }

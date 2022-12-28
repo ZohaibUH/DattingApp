@@ -15,7 +15,7 @@ namespace API.Controllers
             
         }  
         [HttpGet]
-        public  ActionResult<string> GetFileProcess() 
+        public async Task<ActionResult<string>> GetFileProcess() 
         {   
            int exitCode;
             ProcessStartInfo psi = new ProcessStartInfo();
@@ -54,7 +54,7 @@ namespace API.Controllers
            // Console.WriteLine("ExitCode: " + exitCode.ToString(), "ExecuteCommand");
             process.Close();  
     
-            return  output;
+            return   output;
         } 
      [HttpGet("{filename}")] 
         public  async Task<ActionResult<string>> ExecuteBatchFile(string filename)
@@ -104,7 +104,7 @@ namespace API.Controllers
                 Console.WriteLine(ex.Message);
             } 
        
-         return filename;
+         return NoContent();
         }
     }
 }

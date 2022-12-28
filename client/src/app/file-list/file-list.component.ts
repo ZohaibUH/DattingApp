@@ -23,9 +23,7 @@ export class FileListComponent implements OnInit {
   ngOnInit(): void { 
     
     this.getfiles(); 
-    setTimeout(() => {
-      this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
-    }, 5000);
+
 
   } 
   getfiles() 
@@ -33,16 +31,19 @@ export class FileListComponent implements OnInit {
      
    
   //this.memberService.getFiles().subscribe(   res => { 
-    this.Gettingfiles=this.activateRoute.snapshot.data['data'];  
+    this.Gettingfiles=this.activateRoute.snapshot.data['data'];   
+   
     this.Gettingfiles = this.Gettingfiles.replace(/\"/g, '');
     this.tableArray = this.Gettingfiles.split(/\r?\n/);
-   
+    console.log(  this.Gettingfiles);
     // Table body row
-    this.tableRows = this.tableArray.splice(1, this.tableArray.length);
+    this.tableRows = this.tableArray.splice(0, this.tableArray.length); 
+    //console.log( this.tableRows );
     this.tableRows = this.tableRows.map(x => x.split(',')); 
     //this.tableRows=this.tableArrayRows.splice(this.tableArrayRows.length, 1);
    // this.Gettingfiles=this.Gettingfiles.replace(/\"/g, '');
-    console.log(this.tableRows.splice(this.tableRows.length-1,1)); 
+   // console.log(this.tableRows.splice(this.tableRows.length-1,1));  
+    
       //err=> console.log(err)
   //}); 
  
@@ -55,7 +56,7 @@ export class FileListComponent implements OnInit {
 
      
    this.memberService.updatefilename(this.filename);  
-   window.location.reload();
+   //window.location.reload();
     //.subscribe({ 
       //next:_ =>{ 
         //this.toastr.success('Profile Upadted Successfully'); 

@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map, take, tap, timeout } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/members';
 import { PaginatedResult } from '../_models/Paginaton'; 
@@ -19,7 +20,8 @@ export class MembersService {
   userParams: UserParams | undefined; 
   
   var:string;
-  constructor(private http: HttpClient, private accountService: AccountService) { 
+  router: any;
+  constructor(private http: HttpClient, private accountService: AccountService,private toastr: ToastrService) { 
     this.accountService.currentUser$.pipe(take(1)).subscribe({ 
       next: user=>{ 
         if(user){ 
@@ -83,21 +85,34 @@ export class MembersService {
     )
   } 
    getFiles():Observable<any>
-  {   
+  {   console.log("hi2");
    
-    return this.http.get(this.baseUrl + 'process',{ responseType: 'text'}) 
+    return this.http.get(this.baseUrl + 'process',{ responseType: 'text'}) .pipe(
+   timeout(10000),
+      catchError( err => {  
+      console.log("Server is slow and not responding.Please try again Later ");
+       this.router.navigateByUrl('/'); 
+        return throwError("Timeout has occurred");
+      }));
+    
+
     
   } 
   updatefilename( filename:string)
   {  
      console.log("ok"+filename);
-    return this.http.get(this.baseUrl + 'process/'+filename,{ responseType: 'text'}) .subscribe(
-      val => {
+    return this.http.get(this.baseUrl + 'process/'+filename,{ responseType: 'text'}) .pipe(timeout(10000)).subscribe(
+      response => { 
+        window.location.reload();  
+        
+       // this.toastr.error("Selected file has been deleted ");
           console.log("PUT call successful value returned in body", 
-                      val);
+                      response);
       },
-      response => {
-          console.log("PUT call in error", response);
+      (error) => {  
+        this.toastr.error("Server is slow and not closing the file.Please try again Later ");
+        //this.router.navigateByUrl('/');
+          console.log("PUT call in error", error);
       },
       () => {
           console.log("The PUT observable is now completed.");
@@ -112,7 +127,16 @@ export class MembersService {
   deletePhoto(photoId:number) 
   { 
     return this.http.delete(this.baseUrl + 'users/delete-photo' +  photoId);
+  }  
+  addLike(username: string){ 
+    return this.http.post(this.baseUrl+'likes/'+username,{});
   } 
+  getLikes(predicate: string, pageNumber: number,pageSize:number){  
+    let params =this.getPaginationHeaders(pageNumber,pageSize); 
+    params=params.append('predicate',predicate);
+   // return this.http.get<Member[]>(this.baseUrl+'likes?predicate='+predicate); 
+   return this.getPaginatedResult<Member[]>(this.baseUrl+'likes',params)
+  }
   private getPaginatedResult<T>(url: string ,params: HttpParams) { 
     const paginatedResult: PaginatedResult<T>=new PaginatedResult<T>;
     return this.http.get<T>(url, { observe: 'response', params }).pipe(
@@ -129,7 +153,7 @@ export class MembersService {
       })
     );
   }
-
+  
   private getPaginationHeaders(pageNumber: number,pageSize:number) {
     let params = new HttpParams; // allows us to set query string parameters along with our HTTP request. 
  
@@ -137,5 +161,6 @@ export class MembersService {
       params = params.append('pageSize', pageSize);
    
     return params;
-  }
+  } 
+
 }

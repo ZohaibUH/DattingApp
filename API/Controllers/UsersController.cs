@@ -1,13 +1,9 @@
-
 using Microsoft.AspNetCore.Mvc;  
 using Microsoft.AspNetCore.Authorization;
 using API.Interfaces;
 using AutoMapper;
 using API.DTOs;
-using System.Security.Claims;
 using API.Extensions;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
 using API.Entities;
 using API.Helpers;
 
@@ -28,7 +24,7 @@ namespace API.Controllers
             
 
         }  
-        
+        //[Authorize(Roles ="Admin")]
         [HttpGet]  
         
         public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery]UserParams userParams) 
@@ -47,7 +43,7 @@ namespace API.Controllers
             
 
         }  
-        
+       // [Authorize(Roles ="Member")]
         [HttpGet("{username}")] 
         public async Task<ActionResult<MemberDto>> GetUser(string username) 
         { 

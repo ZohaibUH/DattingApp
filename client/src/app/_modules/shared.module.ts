@@ -10,7 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'; 
 import { PaginationModule } from 'ngx-bootstrap/pagination'; 
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
-import { TimeagoModule } from 'ngx-timeago';
+import { TimeagoModule } from 'ngx-timeago'; 
+import { ModalModule } from 'ngx-bootstrap/modal';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = 
 {
   "bgsColor": "#3f51b5",
@@ -58,7 +59,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig =
     BsDatepickerModule.forRoot(), 
     PaginationModule.forRoot(), 
     ButtonsModule.forRoot(), 
-    TimeagoModule.forRoot()
+    TimeagoModule.forRoot(), 
+    ModalModule.forRoot()
   ], 
   exports:[ 
     BsDropdownModule,  
@@ -71,7 +73,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig =
     BsDatepickerModule,
     PaginationModule, 
     ButtonsModule,
-    TimeagoModule
+    TimeagoModule, 
+    ModalModule
   ]
 })
 export class SharedModule { }

@@ -1,26 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using API.Data; 
 using Microsoft.EntityFrameworkCore;
-using API.Interfaces; 
-using API.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using API.Extensions;
 using API.Middleware;
+using Microsoft.AspNetCore.Identity;
+using API.Entities;
 
 namespace API
 {
@@ -78,7 +62,9 @@ namespace API
             { 
                 var context=services.GetRequiredService<DataContext>(); 
                 await context.Database.MigrateAsync(); 
-                await Seed.SeedUsers(context);
+                var userManager=services.GetRequiredService<UserManager<AppUser>>(); 
+                 var roleManager=services.GetRequiredService<RoleManager<AppRole>>();
+                await Seed.SeedUsers(userManager,roleManager);
             } 
             catch (Exception ex) 
             { 
