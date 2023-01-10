@@ -2,17 +2,22 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Security;
-using Microsoft.AspNetCore.Authorization; 
- 
+using Microsoft.AspNetCore.Authorization;
+using API.Interfaces;
+
 namespace API.Controllers
 { 
     [Authorize]
     public class ProcessController: BaseApiController
     { 
+          private readonly IStudyFolder _studyFolder;
         
-        public ProcessController()
+        public ProcessController(IStudyFolder studyFolder)
         { 
-            
+
+            _studyFolder = studyFolder;  
+           _studyFolder.Run();
+           
         }  
         [HttpGet]
         public async Task<ActionResult<string>> GetFileProcess() 

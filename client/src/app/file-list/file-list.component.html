@@ -27,8 +27,8 @@
       </thead>
       <tbody> 
         <tr *ngFor="let tableRow of tableRows" > 
-          <ng-container *ngIf="tableRow.length > 1 ">
-          <td *ngFor="let item of tableRow;index as i; first as isFirst" >{{i}}/{{tableRow.length}}. {{item}} <span *ngIf="isFirst">default</span> </td> 
+          <ng-container *ngIf="tableRow.length > 1 &&  tableRow[3].toLowerCase().includes('.pdf')  ">
+          <td *ngFor="let item of tableRow;index as i; first as isFirst" > {{item}} </td> 
           <td>
             <span class="badge badge-success rounded-pill d-inline">Open</span>
           </td> 

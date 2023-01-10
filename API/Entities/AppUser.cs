@@ -26,7 +26,10 @@ namespace API.Entities
       // public ICollection<AppUserRole> UserRoles { get; set; }
       public List<UserLike> LikedByUsers { get; set; }  //many to many relationship 
       public List<UserLike> LikedUsers { get; set; } 
-      public ICollection<AppUserRole> UserRoles { get; set; }
+      public ICollection<AppUserRole> UserRoles { get; set; } 
+      public List<Message> MessageSent{get; set;}  
+      public List<Message> MessageRecieved{get; set;} 
+
 
     }
 }

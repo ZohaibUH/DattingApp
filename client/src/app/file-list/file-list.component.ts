@@ -35,7 +35,7 @@ export class FileListComponent implements OnInit {
    
     this.Gettingfiles = this.Gettingfiles.replace(/\"/g, '');
     this.tableArray = this.Gettingfiles.split(/\r?\n/);
-    console.log(  this.Gettingfiles);
+    //console.log(  this.Gettingfiles);
     // Table body row
     this.tableRows = this.tableArray.splice(0, this.tableArray.length); 
     //console.log( this.tableRows );

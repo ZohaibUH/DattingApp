@@ -15,6 +15,9 @@ import { FileListComponent } from './file-list/file-list.component';
 import { ResolveGuard } from './_guards/resolve.guard';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { AdminGuard } from './_guard/admin.guard';
+import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
+import { StudyFolderComponent } from './OpenFiles/study-folder/study-folder.component';
+import { StudyFolderResolver } from './_resolvers/study-folder.resolver';
 const routes: Routes = [ 
   {path: '', component :HomeComponent},  
   {path: '', 
@@ -22,11 +25,12 @@ const routes: Routes = [
        canActivate: [AuthGuard], 
        children:[ 
         {path: 'members', component : MemberListComponent}, 
-        {path: 'members/:username', component :MemberDetailComponent},  
+        {path: 'members/:username', component :MemberDetailComponent, resolve:{member:MemberDetailedResolver}},  
         {path: 'member/edit', component :MemberEditComponent , canDeactivate:[PreventUnsavedChangesGuard]}, 
         {path: 'lists', component :ListsComponent}, 
         {path: 'messages', component :MessagesComponent}, 
         {path: 'files', component:FileListComponent, resolve:{ data:ResolveGuard}},  
+        {path: 'studyfiles', component:StudyFolderComponent,resolve:{ filedata:StudyFolderResolver}},   
         {path: 'admin', component:AdminPanelComponent, canActivate:[AdminGuard]}
        ]
   },

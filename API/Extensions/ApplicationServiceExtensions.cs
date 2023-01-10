@@ -3,6 +3,7 @@ using API.Data;
 using API.Helpers;
 using API.Interfaces;
 using API.Services;
+using API.SignalR;
 using Microsoft.EntityFrameworkCore;
 namespace API.Extensions
 { 
@@ -18,11 +19,15 @@ namespace API.Extensions
             );    
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddCors();
-            services.AddScoped<IUserRepository,UserRepository>(); 
+            services.AddScoped<IUserRepository,UserRepository>();  
+            services.AddScoped<IStudyFolder,StudyFolder>(); 
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings")); 
             services.AddScoped<IPhotoService,PhotoService>(); 
             services.AddScoped<LogUserActivity>(); 
-            services.AddScoped<ILikesRepository,LikesRepository>();
+            services.AddScoped<ILikesRepository,LikesRepository>(); 
+            services.AddScoped<IMessageRepository,MessageRepository>(); 
+            services.AddSignalR(); 
+            services.AddSingleton<PresenceTracker>();
             return services;
         }
     }

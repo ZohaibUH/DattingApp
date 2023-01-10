@@ -18,8 +18,11 @@
                 <a class="nav-link" routerLink='/messages' routerLinkActive="active">Messages</a>
               </li> 
               <li class="nav-item">
-                <a class="nav-link" routerLink='/files' routerLinkActive="active">Files</a>
-              </li>  
+                <a class="nav-link" routerLink='/files' routerLinkActive="active">SOP Open Files</a>
+              </li>   
+              <li class="nav-item">
+                <a class="nav-link" routerLink='/studyfiles' routerLinkActive="active">StudyFolder Open Files</a>
+              </li> 
               <li *appHasRole="['Admin','Moderator']" class="nav-item">
                 <a class="nav-link" routerLink='/admin' routerLinkActive="active">Admin</a>
               </li> 
