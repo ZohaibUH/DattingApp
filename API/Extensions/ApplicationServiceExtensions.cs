@@ -19,13 +19,13 @@ namespace API.Extensions
             );    
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddCors();
-            services.AddScoped<IUserRepository,UserRepository>();  
+             
             services.AddScoped<IStudyFolder,StudyFolder>(); 
-            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings")); 
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));  
+            services.Configure<ITRSettings>(config.GetSection("ITRSettings")); 
             services.AddScoped<IPhotoService,PhotoService>(); 
             services.AddScoped<LogUserActivity>(); 
-            services.AddScoped<ILikesRepository,LikesRepository>(); 
-            services.AddScoped<IMessageRepository,MessageRepository>(); 
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
             services.AddSignalR(); 
             services.AddSingleton<PresenceTracker>();
             return services;

@@ -35,7 +35,8 @@ import { UserManagementComponent } from './admin/user-management/user-management
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
-import { StudyFolderComponent } from './OpenFiles/study-folder/study-folder.component'; 
+import { StudyFolderComponent } from './OpenFiles/study-folder/study-folder.component';
+import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component'; 
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { StudyFolderComponent } from './OpenFiles/study-folder/study-folder.comp
     PhotoManagementComponent,
     RolesModalComponent,
     MemberMessagesComponent,
-    StudyFolderComponent 
+    StudyFolderComponent,
+    ConfirmDialogComponent 
   ], 
   
   imports: [

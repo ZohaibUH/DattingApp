@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security;
 using Microsoft.AspNetCore.Authorization;
 using API.Interfaces;
+using Microsoft.Extensions.Options;
+using API.Helpers;
 
 namespace API.Controllers
 { 
@@ -11,10 +13,11 @@ namespace API.Controllers
     public class ProcessController: BaseApiController
     { 
           private readonly IStudyFolder _studyFolder;
+           private readonly  IOptions<ITRSettings> _config;
         
-        public ProcessController(IStudyFolder studyFolder)
+        public ProcessController(IStudyFolder studyFolder,IOptions<ITRSettings> config)
         { 
-
+            _config = config;
             _studyFolder = studyFolder;  
            _studyFolder.Run();
            
@@ -29,15 +32,15 @@ namespace API.Controllers
             psi.CreateNoWindow = true;
             psi.FileName = System.Environment.GetEnvironmentVariable("COMSPEC");
             psi.Arguments = "/C openfiles  /Query /s FSB /fo csv | find /i \"L:\\Library\\SOP\\\"";
-            psi.UserName = "dev";      
-            string plainString="misITR17";
+            psi.UserName = _config.Value.username;      
+            string plainString=_config.Value.password;
             SecureString secure = new SecureString();
             foreach (char c in plainString.ToCharArray())
             {
                 secure.AppendChar(c);
             }
             psi.Password = secure;
-            psi.Domain = "ITR";
+            psi.Domain = _config.Value.domain;
             psi.Verb = "runas";
             psi.UseShellExecute = false;
             psi.RedirectStandardOutput = true;

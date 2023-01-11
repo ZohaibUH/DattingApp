@@ -4,6 +4,7 @@ import { MembersService } from '../_services/members.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute ,Route,Router} from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-file-list',
@@ -11,7 +12,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
   styleUrls: ['./file-list.component.css']
 })
 export class FileListComponent implements OnInit {
-  baseUrl= "https://localhost:5001/api/";   
+  baseUrl= environment.apiUrl;   
   Gettingfiles: string | undefined; 
   tableArray: any;
   tableArrayRows: any[] = [];

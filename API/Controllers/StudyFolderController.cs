@@ -4,15 +4,19 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security;
 using Microsoft.AspNetCore.Authorization;
 using API.Interfaces;
+using Microsoft.Extensions.Options;
+using API.Helpers;
 
 namespace API.Controllers
 { 
   [Authorize]
     public class StudyFolderController :BaseApiController
     {
-         private readonly IStudyFolder _studyFolder;
-        public StudyFolderController(IStudyFolder studyFolder) 
+        private readonly IStudyFolder _studyFolder;
+        private readonly IOptions<ITRSettings> _config;
+        public StudyFolderController(IStudyFolder studyFolder,IOptions<ITRSettings> config) 
         { 
+            _config = config;
            _studyFolder = studyFolder;  
            _studyFolder.Run();
            
@@ -28,16 +32,15 @@ namespace API.Controllers
             psi.CreateNoWindow = true;
             psi.FileName = System.Environment.GetEnvironmentVariable("COMSPEC");
             psi.Arguments = $@"/C  psfile  \\fsb ""S:\Study_Info"" ";
-            psi.UserName = "dev";      
-            string plainString="misITR17";
+            psi.UserName = _config.Value.username;      
+            string plainString=_config.Value.password;
             SecureString secure = new SecureString();
             foreach (char c in plainString.ToCharArray())
             {
                 secure.AppendChar(c);
             }
             psi.Password = secure;
-            psi.Domain = "ITR";
-           psi.Domain = "ITR";
+            psi.Domain = _config.Value.domain;
                 
                 psi.UseShellExecute = false;
                 psi.Verb = "runas";
@@ -47,11 +50,7 @@ namespace API.Controllers
                 psi.RedirectStandardOutput = true;
                 
                 process = Process.Start(psi);
-               
-               // process.WaitForExit();
-               
-                // *** Read the streams ***
-                // Warning: This approach can lead to deadlocks, see Edit #2
+              
                 string output = process.StandardOutput.ReadToEnd();
                 string error = process.StandardError.ReadToEnd();
 
