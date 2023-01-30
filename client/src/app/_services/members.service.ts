@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Console } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, take, tap, timeout } from 'rxjs/operators';
@@ -91,8 +92,9 @@ export class MembersService {
     return this.http.get(this.baseUrl + 'process',{ responseType: 'text'}) .pipe(
    timeout(15000),
       catchError( err => {  
-        this.toastr.error("Server is slow and not responding.Please try again Later ");
-       this.router.navigateByUrl('/'); 
+        this.toastr.error("Server is slow and not responding.Please try again Later "); 
+        console.log(err);
+      // this.router.navigateByUrl('/'); 
         return throwError("Timeout has occurred");
       }));
     

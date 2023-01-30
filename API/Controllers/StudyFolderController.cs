@@ -28,7 +28,8 @@ namespace API.Controllers
    int exitCode;
             ProcessStartInfo psi = new ProcessStartInfo();
             Process process;
-            psi.WorkingDirectory = "C:\\\\PSfile";
+    //        psi.WorkingDirectory = "C:\\\\PSfile"; 
+            psi.WorkingDirectory = "C:\\\\PSfile"; 
             psi.CreateNoWindow = true;
             psi.FileName = System.Environment.GetEnvironmentVariable("COMSPEC");
             psi.Arguments = $@"/C  psfile  \\fsb ""S:\Study_Info"" ";
@@ -77,15 +78,15 @@ namespace API.Controllers
                 psi.CreateNoWindow = true;
                 psi.FileName = System.Environment.GetEnvironmentVariable("COMSPEC");
                 psi.Arguments = $@"/C psfile \\fsb ""{Path}"" -c";
-                psi.UserName = "dev";      
-                string plainString="misITR17";
+                psi.UserName =_config.Value.username;      
+                string plainString=_config.Value.password;
                 SecureString secure = new SecureString();
                 foreach (char c in plainString.ToCharArray())
                 {
                   secure.AppendChar(c);
                 }
             psi.Password = secure;
-            psi.Domain = "ITR";
+            psi.Domain =_config.Value.domain;
             psi.Verb = "runas";
                 psi.UseShellExecute = false;
                 psi.RedirectStandardOutput = true;

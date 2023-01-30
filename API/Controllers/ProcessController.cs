@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using API.Interfaces;
 using Microsoft.Extensions.Options;
 using API.Helpers;
+using System.Text;
 
 namespace API.Controllers
 { 
@@ -25,7 +26,8 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<string>> GetFileProcess() 
         {   
-           int exitCode;
+           int exitCode; 
+        try{
             ProcessStartInfo psi = new ProcessStartInfo();
             Process process;
             psi.WorkingDirectory = "C:\\";
@@ -59,35 +61,49 @@ namespace API.Controllers
             
            //Console.WriteLine("output>>" + (String.IsNullOrEmpty(output) ? "(none)" : output));
            // Console.WriteLine("error>>" + (String.IsNullOrEmpty(error) ? "(none)" : error));
-           // Console.WriteLine("ExitCode: " + exitCode.ToString(), "ExecuteCommand");
-            process.Close();  
-    
+           // Console.WriteLine("ExitCode: " + exitCode.ToString(), "ExecuteCommand"); 
+  
+            process.Close();   
             return   output;
+             // Create the file.  
+        } 
+        catch(Exception ex) 
+        { 
+            string path=@"C:\Test\test.txt";
+            using (var tw = new StreamWriter(path, true))
+                {
+                     tw.WriteLine(ex.Message);
+                } 
+            return ex.Message;
+        }
+           
         } 
      [HttpGet("{filename}")] 
         public  async Task<ActionResult<string>> ExecuteBatchFile(string filename)
-        {  
+        {   
+            string directory=null;
          try
             {
                 
-
+                
                int exitCode;
                 ProcessStartInfo psi = new ProcessStartInfo();
                 Process process;
-                psi.WorkingDirectory = "C:\\";
+                psi.WorkingDirectory = @"C:\\\\PSfile"; 
+                directory=psi.WorkingDirectory;
                 psi.CreateNoWindow = true;
                 psi.FileName = System.Environment.GetEnvironmentVariable("COMSPEC");
-                psi.Arguments = $@"/C c:\PSfile\psfile \\fsb ""L:\LIBRARY\SOP\{filename}"" -c";
-                psi.UserName = "dev";      
-                string plainString="misITR17";
+                psi.Arguments = $@"/C psfile \\fsb ""L:\LIBRARY\SOP\{filename}"" -c";
+                psi.UserName = _config.Value.username;      
+                string plainString=_config.Value.password;
                 SecureString secure = new SecureString();
                 foreach (char c in plainString.ToCharArray())
                 {
                   secure.AppendChar(c);
                 }
-            psi.Password = secure;
-            psi.Domain = "ITR";
-            psi.Verb = "runas";
+                 psi.Password = secure;
+                 psi.Domain =_config.Value.domain;
+                 psi.Verb = "runas";
                 psi.UseShellExecute = false;
                 psi.RedirectStandardOutput = true;
                 psi.RedirectStandardError = true;
@@ -112,7 +128,7 @@ namespace API.Controllers
                 Console.WriteLine(ex.Message);
             } 
        
-         return NoContent();
+         return directory;
         }
     }
 }

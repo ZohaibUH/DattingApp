@@ -12,11 +12,12 @@ namespace API.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services,IConfiguration config) 
         { 
             services.AddScoped<ITokenService, TokenService>();
-            services.AddDbContext<DataContext>(options => 
-            { 
-              options.UseSqlite(config.GetConnectionString("DefaultConnections"));
-            } 
-            );    
+          //  services.AddDbContext<DataContext>(options => 
+           // { 
+              //options.UseSqlite(config.GetConnectionString("DefaultConnections")); 
+             // options.UseNpgsql(config.GetConnectionString("DefaultConnections"));
+            //} 
+            //);    
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddCors();
              
