@@ -12,10 +12,12 @@ namespace API.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         
-         private readonly ITokenService _tokenService;
+        private readonly ITokenService _tokenService;
+         private readonly IHttpContextAccessor _httpContext;
         private readonly IMapper _mapper;
         public AccountController(UserManager<AppUser> userManager, ITokenService tokenService,IMapper mapper)
         {
+            
            _userManager = userManager;
             _mapper = mapper;
             _tokenService = tokenService;
@@ -24,10 +26,26 @@ namespace API.Controllers
         } 
      [HttpPost("register")] 
      public async Task<ActionResult<UserDto>> Register(RgisterDto registerDto)   
-     {  
-        if(await UserExists(registerDto.Username)) { 
-            return BadRequest("Username is taken"); 
-        } 
+     {    
+        
+        if(await UserExists(registerDto.Username)) {  
+            
+            var user = await _userManager.Users 
+         .Include(p=>p.Photos)
+         .SingleOrDefaultAsync(x => x.UserName==registerDto.Username); 
+        if(user==null)return Unauthorized("Invalid Username");  
+        var results=await _userManager.CheckPasswordAsync(user,"Pa$$w0rd");  
+        if(!results) return Unauthorized("Invalid Password"); 
+         return new UserDto { 
+            Username= user.UserName, 
+            Token =await _tokenService.CreateToken(user) ,  
+            PhotoUrl=user.Photos.FirstOrDefault(x=>x.IsMain)?.Url, 
+            KnownAs=user.KnownAs, 
+            Gender=user.Gender 
+        }; 
+        }  
+        else 
+        {
         var user =_mapper.Map<AppUser>(registerDto);
        //   using var hmac=new HMACSHA512(); 
              
@@ -37,17 +55,19 @@ namespace API.Controllers
        
      //   _context.Users.Add(user); 
        // await _context.SaveChangesAsync();  
-       var result= await _userManager.CreateAsync(user, registerDto.Password); 
+      var result= await _userManager.CreateAsync(user,"Pa$$w0rd"); 
        if(!result.Succeeded) return BadRequest(result.Errors); 
-       var roleResult=await _userManager.AddToRoleAsync(user,"Member");
-       if(!roleResult.Succeeded) return BadRequest(result.Errors); 
+       //var roleResult=await _userManager.AddToRoleAsync(user,"Member");
+      // if(!roleResult.Succeeded) return BadRequest(roleResult.Errors); 
+         
          return new UserDto { 
             Username= user.UserName, 
-            Token =await _tokenService.CreateToken(user) , 
+            Token =await _tokenService.CreateToken(user) ,  
             KnownAs=user.KnownAs, 
             Gender=user.Gender
-           
-        };
+         
+        }; 
+        }
      }  
      [HttpPost("login")] 
      public async Task<ActionResult<UserDto>> Login(LoginDto logindto) 
@@ -76,7 +96,20 @@ namespace API.Controllers
              KnownAs=user.KnownAs, 
              Gender=user.Gender
         };
-     }
+     } 
+      [HttpPost("verify")]
+        public async Task<IActionResult> GetUserProfile()
+        {   
+        
+         string path = @"C:\test\test.txt";
+         using (var tw = new StreamWriter(path, true))
+            {
+                tw.WriteLine("hello");
+            }
+               
+            return NotFound();
+        } 
+
      private async Task<bool> UserExists(string username) 
      { 
             return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());

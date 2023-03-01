@@ -11,7 +11,13 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination'; 
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TimeagoModule } from 'ngx-timeago'; 
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal'; 
+import { RouterModule } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
+
+
 const ngxUiLoaderConfig: NgxUiLoaderConfig = 
 {
   "bgsColor": "#3f51b5",
@@ -40,8 +46,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig =
   "text": "",
   "textColor": "#FFFFFF",
   "textPosition": "center-center",
-  "maxTime": -1,
-  "minTime": 300
+  "minTime": 3000
 }
 @NgModule({
   declarations: [],
@@ -52,7 +57,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig =
     ToastrModule.forRoot({ 
     positionClass: 'toast-bottom-right'
     }) , 
-    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig), 
     NgxGalleryModule ,
     FileUploadModule, 
     ReactiveFormsModule,
@@ -60,7 +65,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig =
     PaginationModule.forRoot(), 
     ButtonsModule.forRoot(), 
     TimeagoModule.forRoot(), 
-    ModalModule.forRoot()
+    ModalModule.forRoot(), 
+    NgbModule
+   
   ], 
   exports:[ 
     BsDropdownModule,  
@@ -74,7 +81,13 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig =
     PaginationModule, 
     ButtonsModule,
     TimeagoModule, 
-    ModalModule
+    ModalModule, 
+    NgxUiLoaderHttpModule, 
+ 
+  
+  
   ]
 })
-export class SharedModule { }
+export class SharedModule {  
+
+}

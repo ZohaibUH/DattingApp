@@ -13,7 +13,6 @@ import { FilesService } from '../_services/files.service';
 })
 export class StudyFolderResolver implements Resolve<any> { 
   constructor(private fileService:FilesService){ 
-
   }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     return this.fileService.getFiles();

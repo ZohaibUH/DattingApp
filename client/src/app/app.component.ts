@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core'; 
+import { JwksValidationHandler, OAuthService } from 'angular-oauth2-oidc';
+
+
 import { User } from './_models/user';
 import { AccountService } from './_services/account.service';
 
@@ -12,18 +15,21 @@ import { AccountService } from './_services/account.service';
 export class AppComponent implements OnInit {
   title = 'The new project app';  
   users: any;
+  oauthService: any;
  constructor( private accountService: AccountService) 
  { 
-
+  
  }
   ngOnInit(){
-   
-   this.setCurrentUser();
-  }  
-  setCurrentUser() 
-  { 
-    const user: User =JSON.parse(localStorage.getItem('user')) 
-    this.accountService.setCurrentUser(user);
-  }
+    
+    
+   //this.setCurrentUser();
+  }   
 
+ // setCurrentUser() 
+  //{ 
+   // const user: User =JSON.parse(localStorage.getItem('user')) 
+   // this.accountService.setCurrentUser(user);
+  //}
+ 
 }

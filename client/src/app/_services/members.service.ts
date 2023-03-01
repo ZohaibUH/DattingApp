@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { Console } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, map, take, tap, timeout } from 'rxjs/operators';
+import { catchError, delay, map, take, tap, timeout } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/members';
 import { PaginatedResult } from '../_models/Paginaton'; 
 import { User } from '../_models/user';
 import { UserParams } from '../_models/userParams'; 
 import { AccountService } from './account.service';
-import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
+import { getPaginatedResult, getPaginationHeaders } from './paginationHelper'; 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Injectable({
   providedIn: 'root'
 })
@@ -23,7 +24,7 @@ export class MembersService {
   
   var:string;
   router: any;
-  constructor(private http: HttpClient, private accountService: AccountService,private toastr: ToastrService) { 
+  constructor(private http: HttpClient, private accountService: AccountService,private toastr: ToastrService,private ngxService: NgxUiLoaderService) { 
     this.accountService.currentUser$.pipe(take(1)).subscribe({ 
       next: user=>{ 
         if(user){ 
@@ -90,7 +91,7 @@ export class MembersService {
   {   
     
     return this.http.get(this.baseUrl + 'process',{ responseType: 'text'}) .pipe(
-   timeout(15000),
+     timeout(10000),
       catchError( err => {  
         this.toastr.error("Server is slow and not responding.Please try again Later "); 
         console.log(err);
@@ -101,20 +102,17 @@ export class MembersService {
 
     
   } 
-  updatefilename( filename:string)
+  async updatefilename( filename:string)
   {  
-     console.log("ok"+filename);
+    
     return this.http.get(this.baseUrl + 'process/'+filename,{ responseType: 'text'}) .pipe(timeout(10000)).subscribe(
-      response => { 
-        window.location.reload();  
-        
-       // this.toastr.error("Selected file has been deleted ");
-          console.log("PUT call successful value returned in body", 
+      async response => {  
+        setTimeout( () => {  window.location.reload();}, 1500 );
+        console.log("PUT call successful value returned in body", 
                       response);
       },
       (error) => {  
         this.toastr.error("Server is slow and not closing the file.Please try again Later ");
-        //this.router.navigateByUrl('/');
           console.log("PUT call in error", error);
       },
       () => {
@@ -143,3 +141,5 @@ export class MembersService {
   
 
 }
+
+

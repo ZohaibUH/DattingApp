@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup,ReactiveFormsModule, ValidatorFn, Validators  } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { __values } from 'tslib';
 import { AccountService } from '../_services/account.service';
 
 
@@ -50,8 +51,10 @@ matchValues(matchTo: string): ValidatorFn
 
 register() 
 {  
-  const dob=this.getDateOnly(this.registerForm.controls['dateOfBirth'].value); 
-  const values={...this.registerForm.value,dateOfBirth: dob}
+  const dob=this.getDateOnly(this.registerForm.controls['dateOfBirth'].value);  
+  
+  const values={...this.registerForm.value,dateOfBirth: dob} 
+  
   this.accountServive.register(values).subscribe({ 
      next: ()=>{ 
       this.router.navigateByUrl('/members')

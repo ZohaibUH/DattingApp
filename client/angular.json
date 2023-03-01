@@ -17,21 +17,26 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "tsConfig": "tsconfig.app.json", 
+            
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",  
-              "./node_modules/font-awesome/css/font-awesome.css", 
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/font-awesome/css/font-awesome.css",
               "./node_modules/bootswatch/dist/Zephyr/bootstrap.css",
-              "./node_modules/ngx-toastr/toastr.css", 
-             
+              "./node_modules/ngx-toastr/toastr.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [  
+              
+               
+             
+            ]
           },
           "configurations": {
             "production": {
@@ -80,6 +85,7 @@
             "sslKey": "./ssl/server.key", 
             "sslCert": "./ssl/server.crt", 
             "ssl":true
+            
           },
           "configurations": {
             "production": {

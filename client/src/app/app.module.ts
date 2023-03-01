@@ -37,6 +37,16 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 import { StudyFolderComponent } from './OpenFiles/study-folder/study-folder.component';
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component'; 
+import { OAuthModule, provideOAuthClient } from 'angular-oauth2-oidc';
+import { provideHttpClient } from '@angular/common/http'; 
+import { importProvidersFrom } from '@angular/core';
+import { AuthModule, LogLevel, OidcSecurityService,OpenIdConfiguration } from 'angular-auth-oidc-client';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ScheduleFilesComponent } from './schedule-files/schedule-files.component';
+
+
+
+// ...
 
 @NgModule({
   declarations: [
@@ -65,7 +75,8 @@ import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.c
     RolesModalComponent,
     MemberMessagesComponent,
     StudyFolderComponent,
-    ConfirmDialogComponent 
+    ConfirmDialogComponent,
+    ScheduleFilesComponent 
   ], 
   
   imports: [
@@ -74,11 +85,27 @@ import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.c
     HttpClientModule,  
     BrowserAnimationsModule, 
     FormsModule,  
-    SharedModule
-  
-  
+    SharedModule,   
+    AuthModule.forRoot({
+      config: {
+        authority: 'https://accountsvr.itr.itrlab.com/',
+        redirectUrl: 'https://localhost:4200/',
+        postLogoutRedirectUri: 'https://localhost:4200/',
+        clientId: 'fileunlock',
+        scope: 'openid profile fileunlockapi', 
+        responseType: 'id_token token',
+        silentRenew: true,
+        useRefreshToken: true,
+        logLevel: LogLevel.Debug, 
+        
+      },
+    }), NgbModule,
+    
+  ], 
+  exports:[   
+    
   ],
-  providers: [ 
+  providers: [  
     {provide:HTTP_INTERCEPTORS,useClass: ErrorInterceptor, multi: true},  
     {provide:HTTP_INTERCEPTORS,useClass: JwtInterceptor, multi: true},
     {provide:HTTP_INTERCEPTORS,useClass: LoadingInterceptor, multi: true}, 
@@ -88,4 +115,11 @@ import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.c
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+  constructor(public oidcSecurityService: OidcSecurityService) { 
+    
+  }
+ }
+
+

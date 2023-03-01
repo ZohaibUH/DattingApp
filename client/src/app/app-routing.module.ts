@@ -18,6 +18,8 @@ import { AdminGuard } from './_guard/admin.guard';
 import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
 import { StudyFolderComponent } from './OpenFiles/study-folder/study-folder.component';
 import { StudyFolderResolver } from './_resolvers/study-folder.resolver';
+import { ScheduleFilesComponent } from './schedule-files/schedule-files.component';
+import { ScheduleFilesResolver } from './_resolvers/schedule-files.resolver';
 const routes: Routes = [ 
   {path: '', component :HomeComponent},  
   {path: '', 
@@ -31,7 +33,8 @@ const routes: Routes = [
         {path: 'messages', component :MessagesComponent}, 
         {path: 'files', component:FileListComponent, resolve:{ data:ResolveGuard}},  
         {path: 'studyfiles', component:StudyFolderComponent,resolve:{ filedata:StudyFolderResolver}},   
-        {path: 'admin', component:AdminPanelComponent, canActivate:[AdminGuard]}
+        {path: 'admin', component:AdminPanelComponent, canActivate:[AdminGuard]}, 
+        {path: 'schedulefiles', component:ScheduleFilesComponent,resolve:{ scheduleFiles:ScheduleFilesResolver}},  
        ]
   },
   {path: 'errors', component:TestErrorComponent},  

@@ -23,7 +23,8 @@ namespace API.Extensions
              
             services.AddScoped<IStudyFolder,StudyFolder>(); 
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));  
-            services.Configure<ITRSettings>(config.GetSection("ITRSettings")); 
+            services.Configure<ITRSettings>(config.GetSection("ITRSettings"));  
+            
             services.AddScoped<IPhotoService,PhotoService>(); 
             services.AddScoped<LogUserActivity>(); 
             services.AddScoped<IUnitOfWork,UnitOfWork>();

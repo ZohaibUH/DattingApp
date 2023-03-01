@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';  
-import { ReplaySubject } from 'rxjs';
-import {map} from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { ReplaySubject, throwError } from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 import { PresenceService } from './presence.service';
@@ -9,11 +10,14 @@ import { PresenceService } from './presence.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService {
+export class AccountService { 
+  fullname: string; 
+  username: string; 
+  user?: User = {} ;
   baseUrl=environment.apiUrl;
   private currentUserSource=new ReplaySubject<User | null>(null); 
   currentUser$=this.currentUserSource.asObservable();
-  constructor(private http: HttpClient, private presenceService: PresenceService) {  } 
+  constructor(private http: HttpClient, private presenceService: PresenceService, private router: Router) {  } 
   login(model: any) 
   { 
     return this.http.post(this.baseUrl+'account/login',model).pipe( 
@@ -26,14 +30,15 @@ export class AccountService {
       })
     )
   }   
-  register(model:  any) 
-{ 
-   return this.http.post(this.baseUrl + 'account/register', model).pipe( 
+  register(user:  User) 
+{  
+ 
+   return this.http.post(this.baseUrl + 'account/register', user).pipe( 
     map((user: User)=>{  
       if(user) 
       {
-      
-      this.setCurrentUser(user);
+      this.setCurrentUser(user); 
+      this.router.navigateByUrl('/');
       } 
       
     })
@@ -57,5 +62,29 @@ export class AccountService {
   getDecodedToken(token:string) 
   { 
      return JSON.parse(atob(token.split('.')[1]));
-  }
+  } 
+  verifyProfile(model: any)
+  {   
+    
+    return this.http.post(this.baseUrl + 'account/register', model).pipe().subscribe(
+      response => { 
+        
+        this.user=response; 
+        this.setCurrentUser(this.user); 
+      this.router.navigateByUrl('/'); 
+      
+       // this.toastr.error("Selected file has been deleted ");
+          console.log("PUT call successful value returned in body", 
+                      this.user);
+      },
+      (error) => {  
+        
+        //this.router.navigateByUrl('/');
+          console.log("PUT call in error", error);
+      },
+      () => {
+          console.log("The PUT observable is now completed.");
+      }
+  ); 
+    }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { MembersService } from '../_services/members.service';
 import { Observable } from 'rxjs';
@@ -14,23 +14,28 @@ import { environment } from 'src/environments/environment';
 export class FileListComponent implements OnInit {
   baseUrl= environment.apiUrl;   
   Gettingfiles: string | undefined; 
-  tableArray: any;
-  tableArrayRows: any[] = [];
-  filename: string | undefined;
-  tableRows: any[] = [];
+  tableArray: any;  
+  name:string | undefined;
+  elementendNumber: number;
+  tableArrayRows: any[] = []; 
+  tableRow: any[] = [];
+  filenumber: string;
+  tableRows: any[] = []; 
+  filename : string |undefined;
   members$:Observable<string> | undefined;
   constructor(private memberService:MembersService,private toastr:ToastrService, 
      private activateRoute:ActivatedRoute, private router:Router,private ngxService: NgxUiLoaderService) { }
   ngOnInit(): void { 
-    
+ 
+  
     this.getfiles(); 
-
+    
 
   } 
-  getfiles() 
+   getfiles() 
   {  
-     
-   
+    
+   /*
   //this.memberService.getFiles().subscribe(   res => { 
     this.Gettingfiles=this.activateRoute.snapshot.data['data'];   
    
@@ -47,23 +52,34 @@ export class FileListComponent implements OnInit {
     
       //err=> console.log(err)
   //}); 
- 
+ */ 
+  this.Gettingfiles=this.activateRoute.snapshot.data['data'] ; 
+  this.tableArray= this.Gettingfiles.split("[");
     
+  // Table body row
+  this.tableRows = this.tableArray.splice(1, this.tableArray.length); 
+ // console.log( this.tableRows );
+ this.tableRows = this.tableRows.map(x => x.split(' '));   
+   console.log(this.tableRows); 
+   
   } 
   deleteFile( path: string) 
+  {  
+   
+  // this.filename = path.split(/[\\]/).pop(); 
+   this.memberService.updatefilename(path); 
+  }  
+  reload() 
   { 
-    //var filename = ((document.getElementById("Filename") as HTMLInputElement).value); 
-   this.filename = path.split(/[\\]/).pop();
-
-     
-   this.memberService.updatefilename(this.filename);  
-   //window.location.reload();
-    //.subscribe({ 
-      //next:_ =>{ 
-        //this.toastr.success('Profile Upadted Successfully'); 
-      
-        //}
-    //})
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate([currentUrl]);
+    });
   }
+  test(i: number){
+    this.elementendNumber=++i; 
+    
+ } 
+
 
 }

@@ -13,7 +13,7 @@ export class FilesService {
   constructor(private http: HttpClient,private toastr: ToastrService) { } 
   getFiles():Observable<any>
   {  
-  // console.log(this.http.get(this.baseUrl + 'studyfolder',{ responseType: 'text'}));
+  
    return this.http.get(this.baseUrl + 'studyfolder',{ responseType: 'text'}).pipe(
    timeout(10000),
       catchError( err => {  
@@ -27,8 +27,7 @@ export class FilesService {
   }  
   closeFile( filename:string)
   {   
-    
-     
+  
     return this.http.get(this.baseUrl + 'studyfolder/'+filename,{ responseType: 'text'}) .pipe().subscribe(
       response => { 
         window.location.reload();  

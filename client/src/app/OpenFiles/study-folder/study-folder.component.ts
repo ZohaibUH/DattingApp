@@ -17,8 +17,12 @@ export class StudyFolderComponent implements OnInit{
   Gettingfiles: string | undefined;  
   tableArray: any;
   tableArrayRows: any[] = [];
-  filename: string | undefined;
-  tableRows: any[] = [];
+  filename: string | undefined; 
+  searchPdf: string=".pdf";
+  tableRows: any[] = []; 
+  index: number;  
+  name:string | undefined;
+  elementendNumber: number;
   constructor(private memberService:MembersService,private fileService:FilesService,private toastr:ToastrService, 
     private activateRoute:ActivatedRoute, private router:Router,private ngxService: NgxUiLoaderService) { }
   ngOnInit(): void {
@@ -40,18 +44,19 @@ export class StudyFolderComponent implements OnInit{
   } 
   deleteFile( path: string) 
   { 
-    //var filename = ((document.getElementById("Filename") as HTMLInputElement).value); 
-   //this.filename = path.split(/[\:]/).pop();
    console.log(path)
-     this.fileService.closeFile(path);
-  // this.memberService.updatefilename(this.filename);  
-   //window.location.reload();
-    //.subscribe({ 
-      //next:_ =>{ 
-        //this.toastr.success('Profile Upadted Successfully'); 
-      
-        //}
-    //})
+   this.fileService.closeFile(path);
+  } 
+  reload() 
+  { 
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate([currentUrl]);
+    });
   }
+  test(i: number){
+    this.elementendNumber=++i; 
+    
+ } 
 
 }

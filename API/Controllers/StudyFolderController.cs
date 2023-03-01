@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using API.Interfaces;
 using Microsoft.Extensions.Options;
 using API.Helpers;
+using System.Text;
 
 namespace API.Controllers
 { 
@@ -24,8 +25,8 @@ namespace API.Controllers
         } 
      [HttpGet]
      public async Task< ActionResult<string>> GetOpenFiles()  
-     {  
-   int exitCode;
+     {  /*
+            int exitCode;
             ProcessStartInfo psi = new ProcessStartInfo();
             Process process;
     //        psi.WorkingDirectory = "C:\\\\PSfile"; 
@@ -59,18 +60,29 @@ namespace API.Controllers
                 process.Close();
                 Console.WriteLine("output>>" + (String.IsNullOrEmpty(output) ? "(none)" : output));
                 Console.WriteLine("error>>" + (String.IsNullOrEmpty(error) ? "(none)" : error));
-                Console.WriteLine("ExitCode: " + exitCode.ToString(), "ExecuteCommand"); 
-    
-            return   output;
+                Console.WriteLine("ExitCode: " + exitCode.ToString(), "ExecuteCommand"); */ 
+        try{ 
+            string output; 
+            string path=@"C:\OF-bat\log.txt";
+            using (StreamReader streamReader = new StreamReader(path))
+            {
+                output = streamReader.ReadToEnd();
+            }
+            return   output; 
+        } 
+        catch(Exception ex) 
+        {  
+
+           return NoContent();
+        }
      } 
      [HttpGet("{*filename}")] 
-        public  async Task<ActionResult<string>> CloseSFFile(string filename)
+        public  async Task<ActionResult> CloseSFFile(string filename)
         {   
-               string Path=filename.Replace("/","\\");
-     try
+               string name=filename.Replace("/","\\");
+            try
             {
-                
-
+            /*
                int exitCode;
                 ProcessStartInfo psi = new ProcessStartInfo();
                 Process process;
@@ -85,9 +97,9 @@ namespace API.Controllers
                 {
                   secure.AppendChar(c);
                 }
-            psi.Password = secure;
-            psi.Domain =_config.Value.domain;
-            psi.Verb = "runas";
+                psi.Password = secure;
+                psi.Domain =_config.Value.domain;
+                psi.Verb = "runas";
                 psi.UseShellExecute = false;
                 psi.RedirectStandardOutput = true;
                 psi.RedirectStandardError = true;
@@ -101,16 +113,21 @@ namespace API.Controllers
                 string error = process.StandardError.ReadToEnd();
 
                 exitCode = process.ExitCode;
-                process.Close();
-              
+                process.Close();*/
+                string path=@"C:\OF-bat\SOP-filename.txt";
+                using (var tw = new StreamWriter(path, false))
+                {
+                     tw.WriteLine(name);
+                } 
+            return NoContent();
                 
             } 
             catch(Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                return NoContent();
             } 
        
-         return Path;
+         return NoContent();
         }
     }
 }
